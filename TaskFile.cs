@@ -1,18 +1,18 @@
 using NLog;
 
-public class TicketFile
+public class TaskFile
 {
 public string filePath {get; set;}
-public List<Defect> Tickets {get; set;}
+public List<Task> Tickets {get; set;}
 
   private static NLog.Logger logger = LogManager.LoadConfiguration(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
 
 
-  public TicketFile(string inputFilePath){
+  public TaskFile(string inputFilePath){
 
     filePath = inputFilePath;
 
-    Tickets = new List<Defect>();
+    Tickets = new List<Task>();
 
     //populating file
     try{
@@ -22,7 +22,7 @@ public List<Defect> Tickets {get; set;}
 
         while(!sr.EndOfStream)
         {
-           Defect ticket = new Defect();
+           Task ticket = new Task();
            string line = sr.ReadLine(); 
 
            string[] contents = line.Split(','); 
@@ -33,6 +33,8 @@ public List<Defect> Tickets {get; set;}
            ticket.submitter = contents[4];
            ticket.worker = contents[5];
            ticket.watcher = contents[6];
+           ticket.ProjectName = contents[7];
+           ticket.date = contents[8];
 
         }
 
@@ -44,14 +46,14 @@ public List<Defect> Tickets {get; set;}
 
   }
 
-  public void submittTicket(Defect ticket){
+  public void submittTicket(Task ticket){
     try{
 
       if(Tickets.Any()){ ticket.UID = Tickets.Max(t => t.UID) + 1; }else {ticket.UID = 1;}
       
         
         StreamWriter sw = new StreamWriter(filePath, true);
-        sw.WriteLine($"{ticket.UID},{ticket.desc},{ticket.status},{ticket.priority},{ticket.submitter},{ticket.worker},{ticket.watcher}");
+        sw.WriteLine($"{ticket.UID},{ticket.desc},{ticket.status},{ticket.priority},{ticket.submitter},{ticket.worker},{ticket.watcher},{ticket.ProjectName},{ticket.date}");
         sw.Close();
 
         Tickets.Add(ticket);

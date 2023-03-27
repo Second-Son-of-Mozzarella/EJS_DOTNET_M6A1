@@ -1,18 +1,18 @@
 using NLog;
 
-public class TicketFile
+public class EnhancementFile
 {
 public string filePath {get; set;}
-public List<Defect> Tickets {get; set;}
+public List<Enhancement> Tickets {get; set;}
 
   private static NLog.Logger logger = LogManager.LoadConfiguration(Directory.GetCurrentDirectory() + "\\nlog.config").GetCurrentClassLogger();
 
 
-  public TicketFile(string inputFilePath){
+  public EnhancementFile(string inputFilePath){
 
     filePath = inputFilePath;
 
-    Tickets = new List<Defect>();
+    Tickets = new List<Enhancement>();
 
     //populating file
     try{
@@ -22,7 +22,7 @@ public List<Defect> Tickets {get; set;}
 
         while(!sr.EndOfStream)
         {
-           Defect ticket = new Defect();
+           Enhancement ticket = new Enhancement();
            string line = sr.ReadLine(); 
 
            string[] contents = line.Split(','); 
@@ -33,6 +33,10 @@ public List<Defect> Tickets {get; set;}
            ticket.submitter = contents[4];
            ticket.worker = contents[5];
            ticket.watcher = contents[6];
+           ticket.software = contents[7];
+           ticket.reason = contents[8];
+           ticket.Estimate = float.Parse(contents[9]);
+           ticket.cost = float.Parse(contents[10]);
 
         }
 
@@ -44,14 +48,14 @@ public List<Defect> Tickets {get; set;}
 
   }
 
-  public void submittTicket(Defect ticket){
+  public void submittTicket(Enhancement ticket){
     try{
 
       if(Tickets.Any()){ ticket.UID = Tickets.Max(t => t.UID) + 1; }else {ticket.UID = 1;}
       
         
         StreamWriter sw = new StreamWriter(filePath, true);
-        sw.WriteLine($"{ticket.UID},{ticket.desc},{ticket.status},{ticket.priority},{ticket.submitter},{ticket.worker},{ticket.watcher}");
+        sw.WriteLine($"{ticket.UID},{ticket.desc},{ticket.status},{ticket.priority},{ticket.submitter},{ticket.worker},{ticket.watcher},{ticket.software},{ticket.reason},{ticket.Estimate},{ticket.cost}");
         sw.Close();
 
         Tickets.Add(ticket);
