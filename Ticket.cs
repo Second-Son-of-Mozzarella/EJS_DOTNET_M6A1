@@ -23,7 +23,7 @@ public class Defect : Ticket
         }
 }
 
-public class Enhancements : Ticket
+public class Enhancement : Ticket
 {
     public string software {get; set;}
     public float cost {get; set;}

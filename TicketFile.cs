@@ -47,7 +47,7 @@ public List<Defect> Tickets {get; set;}
   public void submittTicket(Defect ticket){
     try{
 
-      if(Tickets.Any()){ ticket.UID = Tickets.Max(t => t.UID) + 1; }else {ticket.UID = 1;}
+      if(Tickets.Any()){ ticket.UID = Tickets.Max(t => t.UID) + 1; }else {ticket.UID = 1;} // this is a bitch because it uses .Max() and has an anyrisum if the file is empty
       
         
         StreamWriter sw = new StreamWriter(filePath, true);

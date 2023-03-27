@@ -6,12 +6,14 @@ string path = Directory.GetCurrentDirectory() + "\\nlog.config";
 var logger = LogManager.LoadConfiguration(path).GetCurrentClassLogger();
 string FilePathDefect = Directory.GetCurrentDirectory() + "\\Tickets.csv";
 string FilePathTask = Directory.GetCurrentDirectory() + "\\Task.csv";
+string FilePathEnhance = Directory.GetCurrentDirectory() + "\\Enhancements.csv";
 // string FilePath = "Tickets.csv";
 
 
 // finding all of the files
 TicketFile ticketFile = new TicketFile(FilePathDefect);
 TaskFile taskfile = new TaskFile(FilePathTask);
+EnhancementFile enhanceFile = new EnhancementFile(FilePathEnhance);
 string resp = "";
 do{
 
@@ -31,6 +33,7 @@ do{
                 case "1": 
                     foreach(Defect t in ticketFile.Tickets){
                         Console.WriteLine(t.Display());
+                        Thread.Sleep(3000); // just to let you see what comes up before it goes back to the menu
                     }
                 break;
 
@@ -38,11 +41,17 @@ do{
 
                     foreach(Task t in taskfile.Tickets){
                         Console.WriteLine(t.Display());
+                        Thread.Sleep(3000); // the same as previously stated
                     }
 
                 break;
                 
                 case "3":
+
+                foreach(Enhancement t in enhanceFile.Tickets){
+                        Console.WriteLine(t.Display());
+                        Thread.Sleep(3000); // the same as previously stated
+                    }
 
                 break;
 
@@ -177,6 +186,27 @@ do{
                 break;
 
                 case "3":
+
+                        Enhancement EnhanceTicket = new Enhancement();
+                            EnhanceTicket.submitter = submitter;
+                            EnhanceTicket.desc = desc;
+                            EnhanceTicket.status = status;
+                            EnhanceTicket.priority = priority;
+                            EnhanceTicket.worker = worker;
+                            EnhanceTicket.watcher = watcher;
+
+                            Console.WriteLine("What software does the ticket pretain to?");
+                            EnhanceTicket.software = Console.ReadLine();
+
+                            Console.WriteLine("What is your reason for submitting the ticket");
+                            EnhanceTicket.reason = Console.ReadLine();
+
+                            Console.WriteLine("What is the estimate cost of the ticket");
+                            EnhanceTicket.Estimate = float.Parse(Console.ReadLine());
+
+                            Console.WriteLine("What is the exceptible cost of the ticket");
+                            EnhanceTicket.cost = float.Parse(Console.ReadLine());
+
 
                 break;
             }
