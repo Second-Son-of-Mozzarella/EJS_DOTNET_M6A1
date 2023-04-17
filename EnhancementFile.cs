@@ -38,6 +38,8 @@ public List<Enhancement> Tickets {get; set;}
            ticket.Estimate = float.Parse(contents[9]);
            ticket.cost = float.Parse(contents[10]);
 
+           Tickets.Add(ticket);
+
         }
 
         sr.Close();

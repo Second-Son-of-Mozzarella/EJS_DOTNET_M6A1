@@ -34,6 +34,8 @@ public List<Defect> Tickets {get; set;}
            ticket.worker = contents[5];
            ticket.watcher = contents[6];
 
+           Tickets.Add(ticket);
+
         }
 
         sr.Close();

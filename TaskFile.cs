@@ -36,6 +36,8 @@ public List<Task> Tickets {get; set;}
            ticket.ProjectName = contents[7];
            ticket.date = contents[8];
 
+           Tickets.Add(ticket);
+
         }
 
         sr.Close();
